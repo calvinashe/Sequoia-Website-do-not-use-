@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sequoia | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    :root {
+        --green-deep: #2D5016;
+        --green-mid: #4A7C2E;
+        --green-light: #6BAF3D;
+        --green-pale: #E8F0E0;
+        --cream: #FAF6F0;
+        --cream-dark: #F0E8D8;
+        --brown-trunk: #8B4226;
+        --orange-warm: #D4882B;
+        --red-accent: #C75B3A;
+        --text-dark: #2A2A24;
+        --text-mid: #5C5C52;
+        --text-light: #8A8A7E;
+        --shadow-soft: 0 2px 16px rgba(45,80,22,0.08);
+        --shadow-card: 0 4px 24px rgba(45,80,22,0.12);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'DM Sans', sans-serif;
+        background: var(--cream);
+        color: var(--text-dark);
+        min-height: 100vh;
+    }
+
+    /* NAV */
+    .nav {
+        background: linear-gradient(135deg, var(--green-deep), #3A6B1E);
+        padding: 16px 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+    }
+    .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .nav-logo {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        border: 2px solid rgba(255,255,255,0.2);
+        overflow: hidden;
+    }
+    .nav-logo svg { width: 100%; height: 100%; }
+    .nav-brand {
+        font-family: 'Playfair Display', serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: #fff;
+    }
+    .nav-slogan {
+        font-size: 11px;
+        color: rgba(255,255,255,0.5);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-left: 12px;
+    }
+    .nav-greeting {
+        font-size: 14px;
+        color: rgba(255,255,255,0.8);
+        font-style: italic;
+    }
+
+    /* MAIN LAYOUT */
+    .main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 32px 24px;
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 32px;
+    }
+
+    /* SIDEBAR */
+    .sidebar h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 18px;
+        color: var(--green-deep);
+        margin-bottom: 16px;
+    }
+    .update-card {
+        background: #fff;
+        border-radius: 14px;
+        padding: 16px;
+        margin-bottom: 10px;
+        box-shadow: var(--shadow-soft);
+        border-left: 3px solid var(--green-mid);
+    }
+    .update-card h4 {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 4px;
+    }
+    .update-card p {
+        font-size: 12px;
+        color: var(--text-light);
+        line-height: 1.5;
+    }
+    .update-empty {
+        font-size: 13px;
+        color: var(--text-light);
+        font-style: italic;
+    }
+
+    /* COURSES */
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--green-deep);
+        margin-bottom: 20px;
+    }
+    .section-sub {
+        font-size: 13px;
+        color: var(--text-light);
+        margin-bottom: 20px;
+        margin-top: -14px;
+    }
+    .course-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 14px;
+        margin-bottom: 36px;
+    }
+    .course-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: var(--shadow-soft);
+        transition: transform 0.2s, box-shadow 0.2s;
+        cursor: default;
+        position: relative;
+        overflow: hidden;
+    }
+    .course-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-card);
+    }
+    .course-card h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--green-deep);
+        margin-bottom: 4px;
+    }
+    .course-card .course-id {
+        font-size: 11px;
+        color: var(--text-light);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+    }
+    .course-card .accent-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--green-mid), var(--green-light));
+        transition: width 0.5s ease;
+    }
+    .course-card:hover .accent-bar {
+        width: 100%;
+    }
+
+    /* ASSIGNMENTS */
+    .assignment-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .assignment-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 18px 22px;
+        box-shadow: var(--shadow-soft);
+        display: grid;
+        grid-template-columns: 48px 1fr auto;
+        gap: 16px;
+        align-items: center;
+        transition: transform 0.2s, box-shadow 0.2s;
+        cursor: default;
+    }
+    .assignment-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-card);
+    }
+
+    /* Weight ring */
+    .weight-ring {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        position: relative;
+    }
+    .weight-ring svg {
+        position: absolute;
+        top: 0; left: 0;
+        width: 48px; height: 48px;
+        transform: rotate(-90deg);
+    }
+    .weight-ring svg circle {
+        fill: none;
+        stroke-width: 3.5;
+        stroke-linecap: round;
+    }
+    .weight-ring .ring-bg { stroke: var(--green-pale); }
+    .weight-ring .ring-fill { transition: stroke-dashoffset 1s ease; }
+    .weight-ring .ring-pct { position: relative; z-index: 1; }
+
+    .weight-high .ring-fill { stroke: var(--red-accent); }
+    .weight-high .ring-pct { color: var(--red-accent); }
+    .weight-med .ring-fill { stroke: var(--orange-warm); }
+    .weight-med .ring-pct { color: var(--orange-warm); }
+    .weight-low .ring-fill { stroke: var(--green-mid); }
+    .weight-low .ring-pct { color: var(--green-mid); }
+
+    .assign-info .assign-name {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 3px;
+    }
+    .assign-info .assign-course {
+        font-size: 12px;
+        color: var(--text-light);
+        margin-bottom: 6px;
+    }
+    .assign-info .weight-bar {
+        height: 5px;
+        background: var(--green-pale);
+        border-radius: 3px;
+        overflow: hidden;
+        max-width: 180px;
+    }
+    .assign-info .weight-bar-fill {
+        height: 100%;
+        border-radius: 3px;
+    }
+    .assign-due {
+        text-align: right;
+        font-size: 13px;
+        color: var(--text-mid);
+    }
+    .assign-due strong {
+        display: block;
+        font-size: 14px;
+        color: var(--text-dark);
+        font-weight: 600;
+    }
+    .assign-due .pts {
+        font-size: 11px;
+        color: var(--text-light);
+        margin-top: 2px;
+    }
+    .assign-due .urgency {
+        font-size: 10px;
+        font-weight: 600;
+        padding: 3px 10px;
+        border-radius: 100px;
+        margin-top: 4px;
+        display: inline-block;
+    }
+    .urg-high { background: #FDE8E3; color: var(--red-accent); }
+    .urg-med { background: #FDF0DC; color: var(--orange-warm); }
+    .urg-low { background: var(--green-pale); color: var(--green-mid); }
+
+    /* LOADING */
+    .loading {
+        text-align: center;
+        padding: 40px;
+        color: var(--text-light);
+        font-style: italic;
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+        .main { grid-template-columns: 1fr; }
+        .nav { padding: 12px 16px; }
+        .nav-slogan { display: none; }
+        .course-grid { grid-template-columns: 1fr; }
+        .assignment-card { grid-template-columns: 40px 1fr; gap: 10px; }
+        .assign-due { display: none; }
+    }
+    </style>
+</head>
+<body>
+    <!-- NAV -->
+    <div class="nav">
+        <div class="nav-left">
+            <div class="nav-logo">
+                <svg viewBox="0 0 680 690" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="680" height="680" rx="80" fill="#2D5016"/><ellipse cx="340" cy="545" rx="130" ry="20" fill="#1A3A0B" opacity="0.4"/><rect x="324" y="280" width="32" height="250" rx="5" fill="#8B4226"/><rect x="329" y="295" width="10" height="220" rx="3" fill="#A65838" opacity="0.45"/><line x1="324" y1="480" x2="290" y2="458" stroke="#8B4226" stroke-width="7" stroke-linecap="round"/><line x1="356" y1="460" x2="392" y2="440" stroke="#8B4226" stroke-width="6" stroke-linecap="round"/><line x1="324" y1="410" x2="288" y2="390" stroke="#8B4226" stroke-width="6" stroke-linecap="round"/><line x1="356" y1="390" x2="390" y2="372" stroke="#8B4226" stroke-width="5.5" stroke-linecap="round"/><line x1="324" y1="340" x2="296" y2="322" stroke="#7A3A22" stroke-width="5" stroke-linecap="round"/><line x1="356" y1="330" x2="382" y2="315" stroke="#7A3A22" stroke-width="4.5" stroke-linecap="round"/><ellipse cx="282" cy="452" rx="18" ry="14" fill="#3D8B1E"/><ellipse cx="278" cy="448" rx="14" ry="11" fill="#4A9C28"/><ellipse cx="275" cy="445" rx="10" ry="8" fill="#5AAF35"/><ellipse cx="400" cy="434" rx="17" ry="13" fill="#3D8B1E"/><ellipse cx="396" cy="430" rx="13" ry="10" fill="#4A9C28"/><ellipse cx="340" cy="215" rx="95" ry="80" fill="#3D8B1E"/><ellipse cx="340" cy="220" rx="85" ry="70" fill="#4A9C28"/><ellipse cx="320" cy="195" rx="55" ry="48" fill="#4A9C28"/><ellipse cx="360" cy="200" rx="50" ry="44" fill="#3D8B1E"/><ellipse cx="340" cy="180" rx="48" ry="40" fill="#5AAF35"/><ellipse cx="340" cy="168" rx="35" ry="28" fill="#6BC23E"/><ellipse cx="340" cy="145" rx="20" ry="16" fill="#7DD44F"/><ellipse cx="338" cy="136" rx="12" ry="10" fill="#8FE060"/></svg>
+            </div>
+            <span class="nav-brand">Sequoia</span>
+            <span class="nav-slogan">Grow through every semester</span>
+        </div>
+        <div id="user-greeting" class="nav-greeting">Loading...</div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Updates</h2>
+            <div id="announcement-list">
+                <p class="update-empty">No recent updates.</p>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h2 class="section-title">Current Courses</h2>
+            <div id="course-grid" class="course-grid">
+                <p class="loading">Loading courses...</p>
+            </div>
+
+            <h2 class="section-title">Upcoming Priorities</h2>
+            <p class="section-sub">Sorted by grade weight and due date</p>
+            <div id="assignment-list" class="assignment-list">
+                <p class="loading">Loading assignments...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
